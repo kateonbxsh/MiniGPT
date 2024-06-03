@@ -1,0 +1,15 @@
+{
+  "name": "NeuralNetwork",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/source-map-support": "^0.5.6"
+  },
+  "scripts": {
+    "start:dev": "npx nodemon",
+    "compile": "rimraf ./build && tsc -sourcemap",
+    "start": "npm run compile && node build/main.js",
+    "build": "npm run compile && pkg ."
+  },
+  "main": "build/main.js",
+  "bin": "build/main.js"
+}
