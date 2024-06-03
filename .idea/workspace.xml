@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fcfcdba-6304-4fa5-b8f1-8baf126e3890" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/lib/builder/NeuralNetworkTrainingSession.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/NeuralNetwork.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/NeuralNetwork.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Neuron.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Neuron.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/builder/NeuralNetworkTrainingSession.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/builder/NeuralNetworkTrainingSession.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1717374737585</updated>
       <workItem from="1717374738640" duration="86000" />
-      <workItem from="1717374880627" duration="12490000" />
+      <workItem from="1717374880627" duration="16763000" />
     </task>
     <servers />
   </component>

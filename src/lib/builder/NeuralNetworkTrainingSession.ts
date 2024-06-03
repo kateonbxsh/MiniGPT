@@ -6,13 +6,31 @@ interface NeuralGradient {
     biases: number[][]
 }
 
+export enum TrainingMethod {
+    STOCHASTIC,
+    BATCH,
+    MINIBATCH //TO-DO
+}
+
 export default class NeuralNetworkTrainingSession {
 
     network: NeuralNetwork;
     gradients: NeuralGradient[] = [];
+    method: TrainingMethod = TrainingMethod.BATCH;
+    learningRate = 1;
 
     constructor(network: NeuralNetwork) {
         this.network = network;
+    }
+
+    setLearningRate(rate: number) {
+        this.learningRate = rate;
+        return this;
+    }
+
+    setMethod(method: TrainingMethod) {
+        this.method = method;
+        return this;
     }
 
     addData(input: Array<number>, desiredOutput: Array<number>) {
@@ -43,39 +61,69 @@ export default class NeuralNetworkTrainingSession {
                 return neuron.__cost_derivative;
             });
             gradient.biases.push(layerBiasGradient)
-            this.gradients.push(gradient);
             currentLayer = currentLayer.last;
+        }
+        if (this.method == TrainingMethod.BATCH) this.gradients.push(gradient);
+        else {
+            this.applyGradient(gradient);
         }
         return this;
     }
 
+    applyGradient(gradient: NeuralGradient) {
+        let weightIndex = 0;
+        for(let i = this.network.layers.length - 2; i >= 0; i--) {
+            let currentLayer = this.network.layers[i];
+            for(let j = 0; j < currentLayer.neurons.length; j++) {
+                let currentNeuron = currentLayer.neurons[j];
+                for(let k = 0; k < currentNeuron.weights.length; k++) {
+                    currentNeuron.weights[k] -= this.learningRate * gradient.weights[weightIndex][j][k];
+                }
+            }
+            weightIndex++;
+        }
+        let biasIndex = 0;
+        for(let i = this.network.layers.length - 1; i >= 0; i--) {
+            let currentLayer = this.network.layers[i];
+            for(let j = 0; j < currentLayer.neurons.length; j++) {
+                let currentNeuron = currentLayer.neurons[j];
+                currentNeuron.bias -= this.learningRate * gradient.biases[biasIndex][j];
+            }
+            biasIndex++;
+        }
+    }
+
     end() {
+        if (this.method == TrainingMethod.STOCHASTIC) return;
         //average all gradients and subtract them from current weights and biases
         const n = this.gradients.length;
-        for(let i = this.network.layers.length - 2; i <= 0; i--) {
+        let weightIndex = 0;
+        for(let i = this.network.layers.length - 2; i >= 0; i--) {
             let currentLayer = this.network.layers[i];
             for(let j = 0; j < currentLayer.neurons.length; j++) {
                 let currentNeuron = currentLayer.neurons[j];
                 for(let k = 0; k < currentNeuron.weights.length; k++) {
                     let sum = 0;
                     for(let g = 0; g < n; g++) {
-                        sum += this.gradients[g].weights[i][j][k];
+                        sum += this.gradients[g].weights[weightIndex][j][k];
                     }
-                    currentNeuron.weights[k] -= sum/n;
+                    currentNeuron.weights[k] -= this.learningRate * sum/n;
                 }
-
             }
+            weightIndex++;
         }
-        for(let i = this.network.layers.length - 1; i <= 0; i--) {
+        let biasIndex = 0;
+        for(let i = this.network.layers.length - 1; i >= 0; i--) {
             let currentLayer = this.network.layers[i];
             for(let j = 0; j < currentLayer.neurons.length; j++) {
                 let currentNeuron = currentLayer.neurons[j];
                 let sum = 0;
                 for(let g = 0; g < n; g++) {
-                    sum += this.gradients[g].biases[i][j];
+                    sum += this.gradients[g].biases[biasIndex][j];
                 }
-                currentNeuron.bias -= sum/n;
+                currentNeuron.bias -= this.learningRate * sum/n;
             }
+            biasIndex++;
         }
     }
 
