@@ -7,6 +7,8 @@ export default class Neuron {
     weights: Array<number> = [];
     bias: number = 0;
 
+    __cost_derivative: number = 0;
+
     constructor(layer: NeuralLayer) {this.layer = layer;}
 
     initiate() {

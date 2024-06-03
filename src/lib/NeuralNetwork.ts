@@ -1,6 +1,7 @@
 import NeuralLayer from "./NeuralLayer";
 import NeuralNetworkBuilder from "./builder/NeuralNetworkBuilder";
 import NeuralFunction from "./abstract/NeuralFunction";
+import NeuralNetworkTrainingSession from "./builder/NeuralNetworkTrainingSession";
 
 export default class NeuralNetwork {
 
@@ -24,6 +25,18 @@ export default class NeuralNetwork {
             neuron.value = inputs[i];
         });
         this.layers[1].activate();
+    }
+
+    get output() {
+        return this.layers[this.layers.length - 1].neurons.map(neuron => neuron.value);
+    }
+
+    cost(desiredOutput: Array<number>) {
+        return this.output.reduce((accumulator, output, i) => accumulator += (desiredOutput[i] - output) ** 2, 0);
+    }
+
+    startTrainingSession() {
+        return new NeuralNetworkTrainingSession(this);
     }
 
 }
