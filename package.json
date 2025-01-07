@@ -2,10 +2,15 @@
   "name": "NeuralNetwork",
   "version": "1.0.0",
   "dependencies": {
-    "@types/source-map-support": "^0.5.6"
+    "@types/natural": "^5.1.5",
+    "@types/source-map-support": "^0.5.6",
+    "natural": "^8.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.2"
   },
   "scripts": {
-    "start:dev": "npx nodemon",
+    "start:dev": "npx ts-node -r tsconfig-paths/register ./src/main.ts",
     "compile": "rimraf ./build && tsc -sourcemap",
     "start": "npm run compile && node build/main.js",
     "build": "npm run compile && pkg ."
