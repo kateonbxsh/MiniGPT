@@ -1,6 +1,9 @@
 # MiniGPT
 
-MiniGPT is a modular GPT-like AI library written in TypeScript. The library lets you define the components or "blocks" that make up your own GPT-style model. You can mix and match different building blocks such as attention, feedforward layers, and more, enabling full customization for your specific needs.
+MiniGPT is a modular GPT-like AI library written in TypeScript. The library lets you define the components or "blocks" that make up your own GPT-style model. You can mix and match different building blocks such as attention, feedforward layers, and more, enabling full customization for your specific needs. 
+
+I wrote this library **from scratch**, implementing all the intrinsic calculations required for building and training the model, including gradient computation, forward propagation, and backpropagation. This hands-on approach allowed me to gain a deeper understanding of how the underlying mechanics of a GPT model function.
+
 
 ## Features
 
